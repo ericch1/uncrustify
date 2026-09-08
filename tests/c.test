@@ -793,3 +793,9 @@
 10292  common/global_align_span_pp_define_num_lines-1.cfg c/align_pp_define_span_mixed.c
 10293  common/global_align_span_pp_define_num_lines-2.cfg c/align_pp_define_span_mixed.c
 10294  common/global_align_span_pp_define_num_lines-3.cfg c/align_pp_define_span_mixed.c
+
+10295  common/align_right_cmt_doxygen_cont-1.cfg          c/align_right_cmt_doxygen_cont.c
+10296  common/align_right_cmt_doxygen_cont-2.cfg          c/align_right_cmt_doxygen_cont.c
+10297  common/align_right_cmt_doxygen_cont-3.cfg          c/align_right_cmt_doxygen_cont.c
+10298  common/align_right_cmt_doxygen_cont-1.cfg          common/align_right_cmt_doxygen_cont_struct.h   C
+10299  common/align_right_cmt_doxygen_cont-2.cfg          common/align_right_cmt_doxygen_cont_struct.h   C

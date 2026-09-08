@@ -1,0 +1,24 @@
+[0]   SHA_DEPOT_GIREF    : 85dfcfd749560fe997f1e0f03bbb64f726237ee3
+[0]   STATUS_DEPOT_GIREF : 
+[0]   SHA_DEPOT_TV       : 2b3c60e37522347af2cca95cf07eb94d662866b2
+[0]
+[0]MEF++
+[0]Temps de profiling "usager"
+[0] Total    sec(WC) s(SelfUser) s(SelfSys) s(ChildUser) s(ChildSys) (VmSizeDiff , VmRSSDiff, VmDataDiff) nbApls      Etiquette
+[0] Total      0.1779     0.0452     0.0184      0.0029      0.0049   163076 KB     14652 KB     21204 KB    1 x  Prog_complet.
+[0] Total      0.1776     0.0450     0.0183      0.0029      0.0049   163076 KB     14396 KB     21204 KB    1 x   PETScInitialisation.
+[0]Memoire VmSizeMin. mesure            : 374764 KB
+[0]Memoire VmSizeMax. mesure            : 374764 KB
+[0]Memoire (VmSizeMax-VmSizeMin) mesure : 0 KB
+[0]Memoire VmRSSMin. mesure             : 120064 KB
+[0]Memoire VmRSSMax. mesure             : 120320 KB
+[0]Memoire VmHWM (véritable RSSMax)     : 134972 KB
+[0]Memoire (VmRSSMax-VmRSSMin) mesure   : 256 KB
+[0]Memoire VmDataMin. mesure             : 33980 KB
+[0]Memoire VmDataMax. mesure             : 33980 KB
+[0]Memoire (VmDataMax-VmDataMin) mesure   : 0 KB
+[0]Memoire VmPeak(Init). mesure         : 374764 KB
+[0]Memoire VmPeak. mesure               : 590396 KB
+[0]Memoire (VmPeak-VmPeak(Init)) mesure : 215632 KB
+[0]Memoire VmExe mesure                 : 20 KB
+[0]Memoire VmLib mesure                 : 270600 KB
