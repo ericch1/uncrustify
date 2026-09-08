@@ -1,4 +1,4 @@
-# Uncrustify-0.83.0
+# Uncrustify-0.82.0-248-0c7c9cc9c-dirty
 
 #
 # General options
@@ -133,22 +133,6 @@ sp_before_assign                = ignore   # ignore/add/remove/force
 # Overrides sp_assign.
 sp_after_assign                 = ignore   # ignore/add/remove/force
 
-# Add or remove space around assignment operator '=', '+=', etc. inside the
-# control parens of a 'for' statement.
-#
-# Overrides sp_assign, sp_before_assign, sp_after_assign and sp_assign_default
-# when set to anything other than ignore.
-sp_for_assign                   = ignore   # ignore/add/remove/force
-
-# Add or remove space around operators '++', '--', '+=', etc. in the
-# increment expression of a 'for' statement (the third section, after the
-# second ';').
-#
-# Overrides sp_incdec, sp_assign, sp_for_assign, sp_before_assign,
-# sp_after_assign and sp_assign_default when set to anything other than
-# ignore.
-sp_for_increment                = ignore   # ignore/add/remove/force
-
 # Add or remove space in 'enum {'.
 #
 # Default: add
@@ -191,19 +175,6 @@ sp_bool                         = ignore   # ignore/add/remove/force
 
 # Add or remove space around compare operator '<', '>', '==', etc.
 sp_compare                      = ignore   # ignore/add/remove/force
-
-# Add or remove space around compare operator '<', '>', '==', etc. inside the
-# control parens of a 'for' statement.
-#
-# Overrides sp_compare when set to anything other than ignore.
-sp_for_compare                  = ignore   # ignore/add/remove/force
-
-# Add or remove space around compare operator '<', '>', '==', etc. inside the
-# control parens of statements other than 'for' (i.e. 'while',
-# 'do { } while', 'if', 'switch', etc.).
-#
-# Overrides sp_compare when set to anything other than ignore.
-sp_sparen_compare               = ignore   # ignore/add/remove/force
 
 # Add or remove space inside '(' and ')'.
 sp_inside_paren                 = ignore   # ignore/add/remove/force
@@ -1864,19 +1835,6 @@ nl_getset_brace                 = ignore   # ignore/add/remove/force
 # Add or remove newline between 'for' and '{'.
 nl_for_brace                    = ignore   # ignore/add/remove/force
 
-# Add or remove newline before assignment operator '=', '+=', etc. inside
-# the control parens of a 'for' statement.
-nl_for_assign                   = ignore   # ignore/add/remove/force
-
-# Add or remove newline before compare operator '<', '>', '==', etc. inside
-# the control parens of a 'for' statement.
-nl_for_compare                  = ignore   # ignore/add/remove/force
-
-# Add or remove newline before operators '++', '--', '+=', etc. in the
-# increment expression of a 'for' statement (the third section, after the
-# second ';').
-nl_for_increment                = ignore   # ignore/add/remove/force
-
 # Add or remove newline before the '{' of a 'catch' statement, as in
 # 'catch (decl) <here> {'.
 nl_catch_brace                  = ignore   # ignore/add/remove/force
@@ -2860,30 +2818,6 @@ align_same_func_call_params_span = 0        # unsigned number
 # 0: No limit (default).
 align_same_func_call_params_thresh = 0        # number
 
-# Maximum budget of empty lines to skip for align_same_func_call_params_span.
-#  -1: Use the global_span_num_empty_lines budget (default).
-#   0: No budget (don't skip any empty lines).
-#  >0: Skip up to this many empty lines between candidates.
-#
-# Default: -1
-align_same_func_call_params_span_num_empty_lines = -1       # number
-
-# Maximum budget of preprocessor lines to skip for align_same_func_call_params_span.
-#  -1: Use the global_span_num_pp_lines budget (default).
-#   0: No budget (don't skip any preprocessor lines).
-#  >0: Skip up to this many preprocessor lines between candidates.
-#
-# Default: -1
-align_same_func_call_params_span_num_pp_lines = -1       # number
-
-# Maximum budget of comment lines to skip for align_same_func_call_params_span.
-#  -1: Use the global_span_num_cmt_lines budget (default).
-#   0: No budget (don't skip any comment lines).
-#  >0: Skip up to this many comment lines between candidates.
-#
-# Default: -1
-align_same_func_call_params_span_num_cmt_lines = -1       # number
-
 # The span for aligning variable definitions.
 #
 # 0: Don't align (default).
@@ -3005,30 +2939,6 @@ align_braced_init_list_span     = 0        # unsigned number
 #
 # 0: No limit (default).
 align_braced_init_list_thresh   = 0        # number
-
-# Maximum budget of empty lines to skip for align_braced_init_list_span.
-#  -1: Use the global_span_num_empty_lines budget (default).
-#   0: No budget (don't skip any empty lines).
-#  >0: Skip up to this many empty lines between candidates.
-#
-# Default: -1
-align_braced_init_list_span_num_empty_lines = -1       # number
-
-# Maximum budget of preprocessor lines to skip for align_braced_init_list_span.
-#  -1: Use the global_span_num_pp_lines budget (default).
-#   0: No budget (don't skip any preprocessor lines).
-#  >0: Skip up to this many preprocessor lines between candidates.
-#
-# Default: -1
-align_braced_init_list_span_num_pp_lines = -1       # number
-
-# Maximum budget of comment lines to skip for align_braced_init_list_span.
-#  -1: Use the global_span_num_cmt_lines budget (default).
-#   0: No budget (don't skip any comment lines).
-#  >0: Skip up to this many comment lines between candidates.
-#
-# Default: -1
-align_braced_init_list_span_num_cmt_lines = -1       # number
 
 # How to apply align_assign_span to function declaration "assignments", i.e.
 # 'virtual void foo() = 0' or '~foo() = {default|delete}'.
@@ -3214,30 +3124,6 @@ align_typedef_amp_style         = 0        # unsigned number
 # 0: Don't align (default).
 align_right_cmt_span            = 0        # unsigned number
 
-# Maximum budget of empty lines to skip for align_right_cmt_span.
-#  -1: Use the global_span_num_empty_lines budget (default).
-#   0: No budget (don't skip any empty lines).
-#  >0: Skip up to this many empty lines between candidates.
-#
-# Default: -1
-align_right_cmt_span_num_empty_lines = -1       # number
-
-# Maximum budget of preprocessor lines to skip for align_right_cmt_span.
-#  -1: Use the global_span_num_pp_lines budget (default).
-#   0: No budget (don't skip any preprocessor lines).
-#  >0: Skip up to this many preprocessor lines between candidates.
-#
-# Default: -1
-align_right_cmt_span_num_pp_lines = -1       # number
-
-# Maximum budget of comment lines to skip for align_right_cmt_span.
-#  -1: Use the global_span_num_cmt_lines budget (default).
-#   0: No budget (don't skip any comment lines).
-#  >0: Skip up to this many comment lines between candidates.
-#
-# Default: -1
-align_right_cmt_span_num_cmt_lines = -1       # number
-
 # Minimum number of columns between preceding text and a trailing comment in
 # order for the comment to qualify for being aligned. Must be non-zero to have
 # an effect.
@@ -3256,27 +3142,6 @@ align_right_cmt_same_level      = false    # true/false
 #
 # 0: Ignore (default).
 align_right_cmt_at_col          = 0        # unsigned number
-
-# Whether to align a Doxygen 'after member' comment ('//!<', '///<', '/*!<'
-# or '/**<') which is alone on its line with the trailing comment of the line
-# above, whatever the column it currently sits in.
-#
-# Such a comment documents what precedes it, so when it directly follows a
-# trailing comment of the same kind it is the continuation of it:
-#
-#   int bb = 2;  //!< comment bb...
-#                //!< ...continued
-#
-# Doxygen groups consecutive '//' comment lines into a single documentation
-# block only when their markers sit in the same column, so aligning them also
-# decides whether the member ends up with one documentation block or several.
-# See documentation/align-doxygen-continuation.txt.
-#
-# Only the continuation lines are moved: they never pull the trailing
-# comments of the group to another column.
-#
-# Requires align_right_cmt_span to be non-zero.
-align_right_cmt_doxygen_cont    = false    # true/false
 
 # The span for aligning function prototypes.
 #
@@ -3388,31 +3253,6 @@ align_pp_define_together        = false    # true/false
 # =0: Don't align (default)
 # >0: Number of lines (including comments) between blocks
 align_pp_define_span            = 0        # unsigned number
-
-# Maximum budget of empty lines to skip for align_pp_define_span.
-#  -1: Use the global_span_num_empty_lines budget (default).
-#   0: No budget (don't skip any empty lines).
-#  >0: Skip up to this many empty lines between candidates.
-#
-# Default: -1
-align_pp_define_span_num_empty_lines = -1       # number
-
-# Maximum budget of preprocessor lines to skip for align_pp_define_span.
-#  -1: Use the global_span_num_pp_lines budget (default).
-#   0: No budget (don't skip any preprocessor lines).
-#  >0: Skip up to this many preprocessor lines between candidates.
-#
-# Default: -1
-align_pp_define_span_num_pp_lines = -1       # number
-
-# Maximum budget of comment lines to skip for align_pp_define_span.
-#  -1: Use the global_span_num_cmt_lines budget (default).
-#   0: No budget (don't skip any comment lines).
-#  >0: Skip up to this many comment lines between candidates.
-#
-# Default: -1
-align_pp_define_span_num_cmt_lines = -1       # number
-
 
 # The minimum space between label and value of a preprocessor define.
 align_pp_define_gap             = 0        # unsigned number

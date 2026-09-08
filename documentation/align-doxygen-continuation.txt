@@ -1,0 +1,105 @@
+align_right_cmt_doxygen_cont and the Doxygen documentation blocks
+=================================================================
+
+What the option does
+--------------------
+
+A Doxygen 'after member' comment ('//!<', '///<', '/*!<' or '/**<') documents
+what precedes it.  When such a comment is alone on its line, just below a
+trailing comment of the same kind, it is the continuation of it:
+
+    int bb = 2;  //!< comment bb...
+                 //!< ...continued
+
+align_right_cmt_doxygen_cont aligns those continuation lines with the trailing
+comment they continue, whatever the column they currently sit in.
+
+
+Why the column matters to Doxygen
+---------------------------------
+
+For C++ style comments, Doxygen groups consecutive '//' lines into a single
+documentation block only when their markers sit in the same column.  A
+continuation whose marker is in another column starts a new block instead.
+
+No text is ever lost.  Whichever form is used, everything that was written ends
+up on the member's page.  What the column changes is how the text is split
+between the brief and the detailed description, and therefore two things a
+reader sees: the order in which the sentences are rendered, and what the member
+summary table shows.
+
+That grouping rule is a property of the way Doxygen reads consecutive comment
+lines, so it is what this option is really about: aligning the continuations is
+what keeps the documentation in a single block.
+
+Measured on a struct whose two members carry the same comment, the only
+difference being the column of the second marker:
+
+    struct Demo
+    {
+        int aligned;     //!< AAA the tolerance used by the solver...
+                         //!< BBB and reset by every call to clear().
+
+        int not_aligned; //!< CCC the maximum number of iterations...
+        //!< DDD and clamped to 1000 at most.
+    };
+
+    member       brief                              detailed
+    ----------   --------------------------------   --------------------------
+    aligned      (empty)                            'AAA ... BBB ...'
+    not_aligned  'DDD and clamped to 1000 at most.' 'CCC the maximum number...'
+
+Identical results with doxygen 1.8.14 and doxygen 1.18.0, both with their
+default settings.
+
+
+Two things worth knowing
+------------------------
+
+- A multi-line block has no brief description.  Doxygen turns a *single* line
+  '//!<' comment into a brief description, but a block spanning several lines
+  goes entirely into the detailed description and leaves the brief empty.  That
+  is the MULTILINE_CPP_IS_BRIEF setting, which defaults to NO.  Aligning the
+  continuations therefore removes the automatic brief a one-line comment would
+  have had; use an explicit \brief, or MULTILINE_CPP_IS_BRIEF = YES, if a brief
+  description is wanted.
+
+- With MULTILINE_CPP_IS_BRIEF = YES the two forms produce the same text, since
+  every block is then a brief one and Doxygen concatenates them in source
+  order.  The column only changes the outcome under the default settings.
+
+- Which of the blocks becomes the brief one, in the split case, looks
+  questionable: the *second* block is used as the brief description and the
+  first as the detailed one, so Doxygen renders the two sentences in reverse
+  order.  This was observed on doxygen 1.8.14 and 1.18.0 alike, but it is not
+  something to rely on: only the grouping rule above is a deliberate part of
+  the Doxygen design.
+
+C style comments behave differently
+-----------------------------------
+
+Every '/* ... */' is already a block of its own, so the grouping rule above
+does not apply to them: consecutive '/*!< ... */' or '/**< ... */' comments are
+appended to the detailed description of the same member, in source order,
+whatever their column.
+
+Measured on six members differing only by the column of the second block --
+aligned with the first one, at the code indent, in column 1, at an arbitrary
+column and far to the right -- all of them give the same result:
+
+    member            brief    detailed
+    ---------------   ------   -----------------------------------
+    one_line_only     (empty)  'AAA a single C block, no continuation.'
+    col_aligned       (empty)  'BBB first block... CCC second block.'
+    col_code_indent   (empty)  'DDD first block... EEE second block.'
+    col_one           (empty)  'FFF first block... GGG second block.'
+    col_random        (empty)  'HHH first block... III second block.'
+    col_far_right     (empty)  'JJJ first block... KKK second block.'
+
+The same holds for '/**< ... */', and for the two markers mixed.  Identical
+results with doxygen 1.8.14 and doxygen 1.18.0.
+
+Note that a single line C block does not become a brief description the way a
+single line '//!<' does, so neither of the two caveats above applies to C style
+comments: there is no brief to lose, and no reordering to fear.  For them the
+option is a matter of readability only.
