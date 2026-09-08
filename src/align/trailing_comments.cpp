@@ -54,6 +54,46 @@ void align_stack(ChunkStack &cs, size_t col, bool align_single, log_sev_t sev)
 } // align_stack
 
 
+/**
+ * A C comment never continues a C++ one and the other way round, but a block
+ * comment spread over several lines is the same kind as a block comment
+ * written on a single line.
+ */
+static bool is_same_comment_kind(Chunk const *first, Chunk const *second)
+{
+   return(  first->IsComment()
+         && second->IsComment()
+         && first->Is(E_Token::CT_COMMENT_CPP) == second->Is(E_Token::CT_COMMENT_CPP));
+} // is_same_comment_kind
+
+
+/**
+ * A Doxygen 'after member' comment which is alone on its line is the
+ * continuation of the trailing comment of the line above, provided both are
+ * comments of the same kind and no blank line separates them.
+ */
+static bool is_right_comment_continuation(Chunk const *pc)
+{
+   if (!pc->IsDoxygenAfterMemberComment())
+   {
+      return(false);
+   }
+   Chunk *nl = pc->GetPrev();
+
+   // the comment has to be on the very next line
+   if (  !nl->IsNewline()
+      || nl->GetNlCount() != 1)
+   {
+      return(false);
+   }
+   Chunk *prev = nl->GetPrev();
+
+   // the line above has to end with a right comment of the same kind
+   return(  is_same_comment_kind(prev, pc)
+         && prev->TestFlags(PCF_RIGHT_COMMENT));
+} // is_right_comment_continuation
+
+
 Chunk *align_trailing_comments(Chunk *start)
 {
    LOG_FUNC_ENTRY();
@@ -96,7 +136,8 @@ Chunk *align_trailing_comments(Chunk *start)
          && (nl_count <= span))
    {
       if (  pc->TestFlags(PCF_RIGHT_COMMENT)
-         && pc->GetColumn() > 1)
+         && (  pc->GetColumn() > 1
+            || pc->TestFlags(PCF_RIGHT_COMMENT_CONT)))
       {
          if (  same_level
             && pc->GetBraceLevel() != lvl)
@@ -112,8 +153,9 @@ Chunk *align_trailing_comments(Chunk *start)
                     __func__, __LINE__, pc->GetOrigLine(), min_col, pc->GetColumn(), pc->Len(),
                     get_token_name(pc->GetType()));
 
-            if (  min_orig == 0
-               || min_orig > pc->GetColumn())
+            if (  !pc->TestFlags(PCF_RIGHT_COMMENT_CONT)
+               && (  min_orig == 0
+                  || min_orig > pc->GetColumn()))
             {
                min_orig = pc->GetColumn();
             }
@@ -233,6 +275,18 @@ void align_right_comments()
 
                pc->SetFlagBits(PCF_RIGHT_COMMENT);
             }
+         }
+         // Change a Doxygen 'after member' continuation into a RIGHT-comment
+         log_rule_B("align_right_cmt_doxygen_cont");
+
+         if (  options::align_right_cmt_doxygen_cont()
+            && pc->GetParentType() == E_Token::CT_COMMENT_WHOLE
+            && is_right_comment_continuation(pc))
+         {
+            LOG_FMT(LALTC, "Changing WHOLE comment on line %zu into a continuation RIGHT-comment\n",
+                    pc->GetOrigLine());
+
+            pc->SetFlagBits(PCF_RIGHT_COMMENT | PCF_RIGHT_COMMENT_CONT);
          }
       }
    }

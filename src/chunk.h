@@ -790,6 +790,13 @@ public:
    bool IsDoxygenComment() const;
 
    /**
+    * @brief checks whether the chunk is a Doxygen 'after member' comment,
+    *        i.e. a comment which documents what precedes it
+    * @return true if the chunk is a Doxygen 'after member' comment
+    */
+   bool IsDoxygenAfterMemberComment() const;
+
+   /**
     * @brief checks whether the chunk is a square bracket
     * @return true if the chunk is a square bracket
     */

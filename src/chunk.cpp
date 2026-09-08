@@ -887,6 +887,25 @@ bool Chunk::IsDoxygenComment() const
 } // Chunk::IsDoxygenComment
 
 
+bool Chunk::IsDoxygenAfterMemberComment() const
+{
+   if (  !IsComment()
+      || Len() < 4)
+   {
+      return(false);
+   }
+   /*
+    * Doxygen 'after member' markers document what precedes them, so such a
+    * comment always belongs to the line it is written on, or to the line
+    * above when it is alone on its line.
+    */
+   return(  GetText().startswith("//!<")
+         || GetText().startswith("///<")
+         || GetText().startswith("/*!<")
+         || GetText().startswith("/**<"));
+} // Chunk::IsDoxygenAfterMemberComment
+
+
 bool Chunk::IsTypeDefinition() const
 {
    return(  Is(E_Token::CT_TYPE)

@@ -3899,6 +3899,28 @@ align_right_cmt_same_level;
 extern BoundedOption<unsigned, 0, 200>
 align_right_cmt_at_col;
 
+// Whether to align a Doxygen 'after member' comment ('//!<', '///<', '/*!<'
+// or '/**<') which is alone on its line with the trailing comment of the line
+// above, whatever the column it currently sits in.
+//
+// Such a comment documents what precedes it, so when it directly follows a
+// trailing comment of the same kind it is the continuation of it:
+//
+//   int bb = 2;  //!< comment bb...
+//                //!< ...continued
+//
+// Doxygen groups consecutive '//' comment lines into a single documentation
+// block only when their markers sit in the same column, so aligning them also
+// decides whether the member ends up with one documentation block or several.
+// See documentation/align-doxygen-continuation.txt.
+//
+// Only the continuation lines are moved: they never pull the trailing
+// comments of the group to another column.
+//
+// Requires align_right_cmt_span to be non-zero.
+extern Option<bool>
+align_right_cmt_doxygen_cont;
+
 // The span for aligning function prototypes.
 //
 // 0: Don't align (default).
