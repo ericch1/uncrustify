@@ -1822,7 +1822,8 @@ static void output_cmt_start(cmt_reflow &cmt, Chunk *pc)
 
       /*
        * A comment continuing the right comment of the line above has been
-       * aligned with it, it is not a comment standing alone in column 1.
+       * placed by align_right_cmt_doxygen_cont, it is not a comment standing
+       * alone in column 1.
        */
       if (  !options::indent_col1_comment()
          && pc->GetOrigCol() == 1

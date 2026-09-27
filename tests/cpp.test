@@ -1732,3 +1732,15 @@
 34999  common/align_right_cmt_span_num_mixed_doxygen_cont-4.cfg cpp/align_right_cmt_span_num_mixed_doxygen_cont.cpp
 35000  common/align_right_cmt_span_num_mixed_doxygen_cont-5.cfg cpp/align_right_cmt_span_num_mixed_doxygen_cont.cpp
 35001  common/align_right_cmt_span_num_mixed_doxygen_cont-6.cfg cpp/align_right_cmt_span_num_mixed_doxygen_cont.cpp
+
+35002  common/align_right_cmt_doxygen_cont-4.cfg          cpp/align_right_cmt_doxygen_cont.cpp
+35003  common/align_right_cmt_doxygen_cont-5.cfg          cpp/align_right_cmt_doxygen_cont.cpp
+35004  common/align_right_cmt_doxygen_cont-4.cfg          cpp/align_right_cmt_doxygen_cont_class.cpp
+35005  common/align_right_cmt_doxygen_cont-5.cfg          cpp/align_right_cmt_doxygen_cont_class.cpp
+35006  common/align_right_cmt_doxygen_cont-4.cfg          common/align_right_cmt_doxygen_cont_struct.h   CPP
+35007  common/align_right_cmt_doxygen_cont-5.cfg          common/align_right_cmt_doxygen_cont_struct.h   CPP
+35008  common/align_right_cmt_doxygen_cont-1.cfg          cpp/align_right_cmt_doxygen_cont_columns.cpp
+35009  common/align_right_cmt_doxygen_cont-2.cfg          cpp/align_right_cmt_doxygen_cont_columns.cpp
+35010  common/align_right_cmt_doxygen_cont-3.cfg          cpp/align_right_cmt_doxygen_cont_columns.cpp
+35011  common/align_right_cmt_doxygen_cont-4.cfg          cpp/align_right_cmt_doxygen_cont_columns.cpp
+35012  common/align_right_cmt_doxygen_cont-5.cfg          cpp/align_right_cmt_doxygen_cont_columns.cpp

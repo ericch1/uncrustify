@@ -67,14 +67,10 @@ static bool is_same_comment_kind(Chunk const *first, Chunk const *second)
 } // is_same_comment_kind
 
 
-/**
- * A Doxygen 'after member' comment which is alone on its line is the
- * continuation of the trailing comment of the line above, provided both are
- * comments of the same kind and no blank line separates them.
- */
-static bool is_right_comment_continuation(Chunk const *pc)
+bool is_doxygen_cmt_continuation(Chunk const *pc)
 {
-   if (!pc->IsDoxygenAfterMemberComment())
+   if (  pc->GetParentType() != E_Token::CT_COMMENT_WHOLE
+      || !pc->IsDoxygenAfterMemberComment())
    {
       return(false);
    }
@@ -88,10 +84,12 @@ static bool is_right_comment_continuation(Chunk const *pc)
    }
    Chunk *prev = nl->GetPrev();
 
-   // the line above has to end with a right comment of the same kind
+   // the line above has to end with a trailing comment of the same kind, or
+   // be itself a continuation of one
    return(  is_same_comment_kind(prev, pc)
-         && prev->TestFlags(PCF_RIGHT_COMMENT));
-} // is_right_comment_continuation
+         && (  prev->GetParentType() == E_Token::CT_COMMENT_END
+            || prev->TestFlags(PCF_RIGHT_COMMENT_CONT)));
+} // is_doxygen_cmt_continuation
 
 
 Chunk *align_trailing_comments(Chunk *start)
@@ -237,6 +235,9 @@ void align_right_comments()
 {
    LOG_FUNC_ENTRY();
 
+   log_rule_B("align_right_cmt_doxygen_cont");
+   const bool align_doxygen_cont = (options::align_right_cmt_doxygen_cont() == 1);
+
    for (Chunk *pc = Chunk::GetHead(); pc->IsNotNullChunk(); pc = pc->GetNext())
    {
       if (  pc->Is(E_Token::CT_COMMENT)
@@ -276,12 +277,10 @@ void align_right_comments()
                pc->SetFlagBits(PCF_RIGHT_COMMENT);
             }
          }
-         // Change a Doxygen 'after member' continuation into a RIGHT-comment
-         log_rule_B("align_right_cmt_doxygen_cont");
 
-         if (  options::align_right_cmt_doxygen_cont()
-            && pc->GetParentType() == E_Token::CT_COMMENT_WHOLE
-            && is_right_comment_continuation(pc))
+         // Change a Doxygen 'after member' continuation into a RIGHT-comment
+         if (  align_doxygen_cont
+            && is_doxygen_cmt_continuation(pc))
          {
             LOG_FMT(LALTC, "Changing WHOLE comment on line %zu into a continuation RIGHT-comment\n",
                     pc->GetOrigLine());
@@ -302,6 +301,35 @@ void align_right_comments()
       else
       {
          pc = pc->GetNext();
+      }
+   }
+
+   if (!align_doxygen_cont)
+   {
+      return;
+   }
+
+   /*
+    * A continuation follows the comment it continues. The groups have already
+    * put them in the same column, except when no group was formed
+    * (align_right_cmt_span is 0) or when the two ended up in different ones.
+    * Done in source order, so that each line of a continuation follows the
+    * one above, which has already been placed.
+    */
+   for (pc = Chunk::GetHead(); pc->IsNotNullChunk(); pc = pc->GetNext())
+   {
+      if (!pc->TestFlags(PCF_RIGHT_COMMENT_CONT))
+      {
+         continue;
+      }
+      Chunk const *prev = pc->GetPrev()->GetPrev();
+
+      if (pc->GetColumn() != prev->GetColumn())
+      {
+         LOG_FMT(LALTC, "%s(%d): continuation on line %zu follows the comment above, col %zu => %zu\n",
+                 __func__, __LINE__, pc->GetOrigLine(), pc->GetColumn(), prev->GetColumn());
+         align_to_column(pc, prev->GetColumn());
+         pc->SetFlagBits(PCF_WAS_ALIGNED);
       }
    }
 } // align_right_comments

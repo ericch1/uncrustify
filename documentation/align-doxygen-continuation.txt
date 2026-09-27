@@ -11,8 +11,49 @@ trailing comment of the same kind, it is the continuation of it:
     int bb = 2;  //!< comment bb...
                  //!< ...continued
 
-align_right_cmt_doxygen_cont aligns those continuation lines with the trailing
-comment they continue, whatever the column they currently sit in.
+align_right_cmt_doxygen_cont decides where those continuation lines go,
+whatever the column they currently sit in:
+
+    0 (default)  leave them to the usual comment indentation rules
+    1            align them with the trailing comment they continue
+    2            indent them at the brace level
+
+With 0, the result depends on the column the continuation had in the input:
+one within indent_comment_align_thresh columns of the comment above stays
+aligned with it, one in column 1 stays there (unless indent_col1_comment is
+set), and one further to the right is brought back to the brace level.  The
+two other values give the same result whatever the input.
+
+    input                   with 1                  with 2
+
+    int bb = 2; //!< bb     int bb = 2; //!< bb     int bb = 2; //!< bb
+    //!< ...                            //!< ...    //!< ...
+
+A comment alone on its line counts as a continuation when it starts with one
+of the four markers above and directly follows (no blank line in between)
+either a trailing comment of the same kind -- C or C++ -- or another
+continuation.  The trailing comment it continues does not have to be an
+'after member' comment itself.  A standalone comment describing the *next*
+statement never uses these markers, so it is never mistaken for one.
+
+With 1, the continuations are aligned with the trailing comments of their
+group when align_right_cmt_span is not zero; they never pull those comments to
+another column.  When align_right_cmt_span is zero, the trailing comments are
+not aligned and each continuation just follows the comment it continues.
+
+
+Which value to choose
+---------------------
+
+1 is what keeps the documentation of a '//!<' or '///<' comment spanning
+several lines in a single Doxygen block, see below.
+
+2 suits the projects that want the continuation lines at the beginning of the
+line, for instance to keep long comments within code_width when the trailing
+comments are aligned far to the right.  It is harmless for C style comments,
+and for C++ style comments when MULTILINE_CPP_IS_BRIEF = YES.  With Doxygen's
+default settings, however, it splits a C++ style comment into two blocks, with
+the consequences described below.
 
 
 Why the column matters to Doxygen
@@ -53,8 +94,8 @@ Identical results with doxygen 1.8.14 and doxygen 1.18.0, both with their
 default settings.
 
 
-Two things worth knowing
-------------------------
+Things worth knowing
+--------------------
 
 - A multi-line block has no brief description.  Doxygen turns a *single* line
   '//!<' comment into a brief description, but a block spanning several lines

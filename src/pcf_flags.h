@@ -80,7 +80,7 @@ enum E_PcfFlag : decltype ( 0ULL )
    PCF_OC_IN_BLOCK          = pcf_bit(49), //! inside OC block function
    PCF_CONT_LINE            = pcf_bit(50), //! continuation line split
    PCF_IN_MACRO_NO_FMT_ARGS = pcf_bit(51), //! in a macro-no-format-args macro
-   PCF_RIGHT_COMMENT_CONT   = pcf_bit(52), //! right comment continuing the
+   PCF_RIGHT_COMMENT_CONT   = pcf_bit(52), //! Doxygen comment continuing the
                                            //! right comment of the line above
 };
 

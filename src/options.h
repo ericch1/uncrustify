@@ -3899,26 +3899,35 @@ align_right_cmt_same_level;
 extern BoundedOption<unsigned, 0, 200>
 align_right_cmt_at_col;
 
-// Whether to align a Doxygen 'after member' comment ('//!<', '///<', '/*!<'
-// or '/**<') which is alone on its line with the trailing comment of the line
-// above, whatever the column it currently sits in.
+// How to position a Doxygen 'after member' comment ('//!<', '///<', '/*!<' or
+// '/**<') which is alone on its line, just below a trailing comment of the
+// same kind.
 //
-// Such a comment documents what precedes it, so when it directly follows a
-// trailing comment of the same kind it is the continuation of it:
+// Such a comment documents what precedes it, so it is the continuation of the
+// trailing comment of the line above:
 //
 //   int bb = 2;  //!< comment bb...
 //                //!< ...continued
 //
+// 0: Leave it to the usual comment indentation rules, which move it or not
+//    depending on the column it currently sits in (default).
+// 1: Align it with the trailing comment it continues, whatever the column it
+//    currently sits in.
+// 2: Indent it at the brace level, like a comment standing alone on its line,
+//    whatever the column it currently sits in.
+//
 // Doxygen groups consecutive '//' comment lines into a single documentation
-// block only when their markers sit in the same column, so aligning them also
-// decides whether the member ends up with one documentation block or several.
-// See documentation/align-doxygen-continuation.txt.
+// block only when their markers sit in the same column. With Doxygen's
+// default settings, 2 therefore splits a '//!<' comment spanning several
+// lines into two blocks, and changes its brief and detailed descriptions.
+// C style comments are not affected. See
+// documentation/align-doxygen-continuation.txt.
 //
-// Only the continuation lines are moved: they never pull the trailing
-// comments of the group to another column.
-//
-// Requires align_right_cmt_span to be non-zero.
-extern Option<bool>
+// With 1, only the continuation lines are moved: they never pull the trailing
+// comments of the group to another column. If align_right_cmt_span is 0, the
+// trailing comments are not aligned and each continuation just follows the
+// comment it continues.
+extern BoundedOption<unsigned, 0, 2>
 align_right_cmt_doxygen_cont;
 
 // The span for aligning function prototypes.

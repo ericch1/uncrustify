@@ -799,3 +799,7 @@
 10297  common/align_right_cmt_doxygen_cont-3.cfg          c/align_right_cmt_doxygen_cont.c
 10298  common/align_right_cmt_doxygen_cont-1.cfg          common/align_right_cmt_doxygen_cont_struct.h   C
 10299  common/align_right_cmt_doxygen_cont-2.cfg          common/align_right_cmt_doxygen_cont_struct.h   C
+10301  common/align_right_cmt_doxygen_cont-4.cfg          c/align_right_cmt_doxygen_cont.c
+10302  common/align_right_cmt_doxygen_cont-5.cfg          c/align_right_cmt_doxygen_cont.c
+10303  common/align_right_cmt_doxygen_cont-4.cfg          common/align_right_cmt_doxygen_cont_struct.h   C
+10304  common/align_right_cmt_doxygen_cont-5.cfg          common/align_right_cmt_doxygen_cont_struct.h   C

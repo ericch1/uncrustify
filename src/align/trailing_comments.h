@@ -46,4 +46,14 @@ void align_stack(ChunkStack &cs, size_t col, bool align_single, log_sev_t sev);
 
 void align_right_comments();
 
+/**
+ * Whether a Doxygen 'after member' comment alone on its line is the
+ * continuation of the trailing comment of the line above: both comments are
+ * of the same kind (C or C++), no blank line separates them, and the comment
+ * above either follows code or is itself such a continuation.
+ *
+ * See Chunk::IsDoxygenAfterMemberComment() for the markers recognized.
+ */
+bool is_doxygen_cmt_continuation(Chunk const *pc);
+
 #endif /* ALIGN_TRAILING_COMMENTS_H_INCLUDED */
