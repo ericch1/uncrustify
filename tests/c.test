@@ -801,3 +801,9 @@
 10301  c/attr_prefix.cfg                                  c/attr_prefix.c
 10302  c/attr_prefix_func_pre_blank.cfg                   c/attr_prefix_func_pre_blank.c
 10303  c/Issue_4794_var_def_blk.cfg                       c/Issue_4794_multiword_proto.c
+
+# align_right_cmt_doxygen_cont
+10304  common/align_right_cmt_doxygen_cont-1.cfg          c/align_right_cmt_doxygen_cont.c
+10305  common/align_right_cmt_doxygen_cont-2.cfg          c/align_right_cmt_doxygen_cont.c
+10306  common/align_right_cmt_doxygen_cont-4.cfg          c/align_right_cmt_doxygen_cont.c
+10307  common/align_right_cmt_doxygen_cont-5.cfg          c/align_right_cmt_doxygen_cont.c
