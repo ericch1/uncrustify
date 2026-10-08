@@ -3899,6 +3899,17 @@ align_right_cmt_same_level;
 extern BoundedOption<unsigned, 0, 200>
 align_right_cmt_at_col;
 
+// How to align a Doxygen 'after member' comment ('//!<', '///<', '/*!<' or
+// '/**<') alone on its line, continuing the trailing comment above it.
+//
+// 0: Usual comment indentation rules (default).
+// 1: Align with the comment it continues. Uses align_right_cmt_span.
+// 2: Indent at the brace level.
+//
+// See documentation/align-right-cmt-doxygen-cont.txt.
+extern BoundedOption<unsigned, 0, 2>
+align_right_cmt_doxygen_cont;
+
 // The span for aligning function prototypes.
 //
 // 0: Don't align (default).
